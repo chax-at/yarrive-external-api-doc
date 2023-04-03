@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "paths": {
-    "/tenant-address": {
+    "/tenant-addresses": {
       "post": {
         "operationId": "TenantController_createTenantAddress",
         "summary": "Create a Tenant Address",
@@ -18,7 +18,14 @@
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiSuccessResponseDto"
+                }
+              }
+            }
           },
           "400": {
             "description": "Generic Error",
@@ -66,7 +73,14 @@
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiSuccessResponseDto"
+                }
+              }
+            }
           },
           "400": {
             "description": "Generic Error",
@@ -99,7 +113,7 @@
         ]
       }
     },
-    "/tenant-address/{syncId}": {
+    "/tenant-addresses/{syncId}": {
       "delete": {
         "operationId": "TenantController_deleteTenantAddress",
         "summary": "Delete a Tenant Address",
@@ -115,7 +129,14 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiSuccessResponseDto"
+                }
+              }
+            }
           },
           "400": {
             "description": "Generic Error",
@@ -198,11 +219,129 @@
       },
       "ExternalApiCreateTenantAddressDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "state": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "postalCode": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "street": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255
+          },
+          "isBillingAddress": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255
+          },
+          "openingHours": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": [
+          "syncId",
+          "country",
+          "state",
+          "postalCode",
+          "city",
+          "street",
+          "title",
+          "description",
+          "isBillingAddress",
+          "type",
+          "openingHours"
+        ]
+      },
+      "ExternalApiSuccessResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "success"
+        ]
       },
       "ExternalApiUpdateTenantAddressDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "state": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "postalCode": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "street": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255
+          },
+          "openingHours": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "isBillingAddress": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255
+          }
+        },
+        "required": [
+          "syncId"
+        ]
       }
     }
   }
