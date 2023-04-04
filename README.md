@@ -3,14 +3,24 @@
 An API for external systems to connect to Yarrive, offering support for reading and synchronizing various sets of data.
 Synchronization happens per Institution.
 
-## Browse docs in browser
-Install 
-`npm ci`
+> ## Browse here:
+> https://github.com/chax-at/yarrive-external-api-doc
 
-Run Server
-`npm start`
 
-Browse [http://localhost:8080](http://localhost:8080).
+### ...or build and browse locally:
+Clone and install:
+```
+git clone https://github.com/chax-at/yarrive-external-api-doc.git
+cd yarrive-external-api-doc
+npm ci
+```
+
+Serve:
+```
+npm start
+```
+
+Docs can then be reached at [http://localhost:8080](http://localhost:8080).
 
 ## How to get an API-Key?
 1. **In Yarrive**, as **Operator**, request an API-Key for your Yarrive-Institution. (`Administration` --> `API`)
