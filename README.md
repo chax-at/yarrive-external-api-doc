@@ -4,7 +4,7 @@ An API for external systems to connect to Yarrive, offering support for reading 
 Synchronization happens per Institution.
 
 > ## Browse here:
-> https://github.com/chax-at/yarrive-external-api-doc
+> https://chax-at.github.io/yarrive-external-api-doc
 
 
 ### ...or build and browse locally:
