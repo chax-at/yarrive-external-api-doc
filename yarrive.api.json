@@ -115,7 +115,7 @@
         ]
       }
     },
-    "/api/external/tenants/addresses": {
+    "/api/external/tenant-addresses": {
       "post": {
         "operationId": "ExternalApiTenantAddressController_createTenantAddress",
         "summary": "Create tenant address",
@@ -273,6 +273,63 @@
         ]
       }
     },
+    "/api/external/tenant-addresses/{syncId}": {
+      "delete": {
+        "operationId": "ExternalApiTenantAddressController_deleteTenantAddress",
+        "summary": "Delete tenant address",
+        "description": "Deletes a tenant address unless it's the last one, or the billing address",
+        "parameters": [
+          {
+            "name": "syncId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiSuccessResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Addresses"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      }
+    },
     "/api/external/course-groups": {
       "get": {
         "operationId": "ExternalApiCourseGroupsController_getCourseGroups",
@@ -286,6 +343,173 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExternalApiCourseGroupsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "CourseGroups"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "ExternalApiCourseGroupsController_createCourseGroup",
+        "summary": "Create course group",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalApiCreateCourseGroupDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiCourseGroupResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "CourseGroups"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "ExternalApiCourseGroupsController_updateCourseGroup",
+        "summary": "Update course group",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalApiUpdateCourseGroupDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiCourseGroupResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "CourseGroups"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      }
+    },
+    "/api/external/course-groups/{syncId}": {
+      "delete": {
+        "operationId": "ExternalApiCourseGroupsController_deleteCourseGroup",
+        "summary": "Delete course group",
+        "description": "Deletes a course group unless it has access codes",
+        "parameters": [
+          {
+            "name": "syncId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiSuccessResponseDto"
                 }
               }
             }
@@ -614,7 +838,7 @@
             "type": "string",
             "readOnly": true
           },
-          "licenceType": {
+          "licenseType": {
             "type": "string",
             "readOnly": true
           },
@@ -628,18 +852,21 @@
             "readOnly": true
           },
           "from": {
-            "type": "number",
+            "format": "date-time",
+            "type": "string",
             "readOnly": true
           },
           "to": {
-            "type": "number",
+            "format": "date-time",
+            "type": "string",
             "readOnly": true
           }
         },
         "required": [
           "syncId",
-          "licenceType",
+          "licenseType",
           "name",
+          "description",
           "from",
           "to"
         ]
@@ -661,6 +888,82 @@
         "required": [
           "success",
           "data"
+        ]
+      },
+      "ExternalApiCreateCourseGroupDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "licenseType": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "from": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "to": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "syncId",
+          "licenseType",
+          "name",
+          "description",
+          "from",
+          "to"
+        ]
+      },
+      "ExternalApiCourseGroupResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/ExternalApiCourseGroupDto"
+          }
+        },
+        "required": [
+          "success",
+          "data"
+        ]
+      },
+      "ExternalApiUpdateCourseGroupDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "from": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "to": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "syncId"
         ]
       }
     }
