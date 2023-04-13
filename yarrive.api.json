@@ -544,6 +544,221 @@
           }
         ]
       }
+    },
+    "/api/external/events": {
+      "get": {
+        "operationId": "ExternalApiEventsController_getEvents",
+        "summary": "Get all events of tenant",
+        "description": "Note: this is a GET endpoint but it has a sideffect:\n    the syncId is generated and set for each retrieved event which does not have a syncId\n    before the events are returned in the response",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiEventsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Events"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "ExternalApiEventsController_createEvent",
+        "summary": "Create event",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalApiCreateEventDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiEventResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Events"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "ExternalApiEventsController_updateEvent",
+        "summary": "Update event",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalApiUpdateEventDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiEventResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Events"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      }
+    },
+    "/api/external/events/{syncId}": {
+      "delete": {
+        "operationId": "ExternalApiEventsController_deleteEvent",
+        "summary": "Delete event",
+        "description": "Deletes a event unless it already started",
+        "parameters": [
+          {
+            "name": "syncId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiSuccessResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Events"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      }
     }
   },
   "info": {
@@ -653,16 +868,16 @@
             "nullable": true,
             "maxLength": 255
           },
+          "openingHours": {
+            "type": "string",
+            "maxLength": 255
+          },
           "isBillingAddress": {
             "type": "boolean"
           },
           "type": {
             "type": "string",
             "nullable": true,
-            "maxLength": 255
-          },
-          "openingHours": {
-            "type": "string",
             "maxLength": 255
           }
         },
@@ -675,9 +890,9 @@
           "street",
           "title",
           "description",
+          "openingHours",
           "isBillingAddress",
-          "type",
-          "openingHours"
+          "type"
         ]
       },
       "ExternalApiTenantAddressDto": {
@@ -960,6 +1175,168 @@
           "to": {
             "format": "date-time",
             "type": "string"
+          }
+        },
+        "required": [
+          "syncId"
+        ]
+      },
+      "ExternalApiEventDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string",
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "readOnly": true
+          },
+          "plannedDateFrom": {
+            "format": "date-time",
+            "type": "string",
+            "readOnly": true
+          },
+          "plannedDateTo": {
+            "format": "date-time",
+            "type": "string",
+            "readOnly": true
+          },
+          "title": {
+            "type": "string",
+            "readOnly": true
+          },
+          "description": {
+            "type": "string",
+            "readOnly": true
+          },
+          "tenantAddressSyncId": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "mandatory": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "syncId",
+          "type",
+          "plannedDateFrom",
+          "plannedDateTo",
+          "title",
+          "description",
+          "tenantAddressSyncId",
+          "mandatory"
+        ]
+      },
+      "ExternalApiEventsResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalApiEventDto"
+            }
+          }
+        },
+        "required": [
+          "success",
+          "data"
+        ]
+      },
+      "ExternalApiCreateEventDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "plannedDateFrom": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "plannedDateTo": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "tenantAddressSyncId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mandatory": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "syncId",
+          "type",
+          "plannedDateFrom",
+          "plannedDateTo",
+          "title",
+          "description",
+          "tenantAddressSyncId",
+          "mandatory"
+        ]
+      },
+      "ExternalApiEventResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/ExternalApiEventDto"
+          }
+        },
+        "required": [
+          "success",
+          "data"
+        ]
+      },
+      "ExternalApiUpdateEventDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "plannedDateFrom": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "plannedDateTo": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "tenantAddressSyncId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mandatory": {
+            "type": "boolean"
           }
         },
         "required": [

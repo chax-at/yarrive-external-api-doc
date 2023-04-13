@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "paths": {
-    "/tenant-addresses": {
+    "/tenantAddresses": {
       "post": {
         "operationId": "TenantAddressController_createTenantAddress",
         "summary": "Create a Tenant Address",
@@ -49,7 +49,7 @@
           }
         },
         "tags": [
-          "Tenant"
+          "Tenant Addresses"
         ],
         "security": [
           {
@@ -104,7 +104,7 @@
           }
         },
         "tags": [
-          "Tenant"
+          "Tenant Addresses"
         ],
         "security": [
           {
@@ -113,7 +113,7 @@
         ]
       }
     },
-    "/tenant-addresses/{syncId}": {
+    "/tenantAddresses/{syncId}": {
       "delete": {
         "operationId": "TenantAddressController_deleteTenantAddress",
         "summary": "Delete a Tenant Address",
@@ -160,7 +160,7 @@
           }
         },
         "tags": [
-          "Tenant"
+          "Tenant Addresses"
         ],
         "security": [
           {
@@ -169,7 +169,7 @@
         ]
       }
     },
-    "/course-groups": {
+    "/courseGroups": {
       "post": {
         "operationId": "CourseGroupController_createCourseGroup",
         "summary": "Create a Course Group",
@@ -217,7 +217,7 @@
           }
         },
         "tags": [
-          "Tenant"
+          "Course Groups"
         ],
         "security": [
           {
@@ -272,7 +272,7 @@
           }
         },
         "tags": [
-          "Tenant"
+          "Course Groups"
         ],
         "security": [
           {
@@ -281,7 +281,7 @@
         ]
       }
     },
-    "/course-groups/{syncId}": {
+    "/courseGroups/{syncId}": {
       "delete": {
         "operationId": "CourseGroupController_deleteCourseGroup",
         "summary": "Delete a Course Group",
@@ -328,7 +328,175 @@
           }
         },
         "tags": [
-          "Tenant"
+          "Course Groups"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      }
+    },
+    "/events": {
+      "post": {
+        "operationId": "EventsController_createEvent",
+        "summary": "Create an Event",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalApiEventDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiSuccessResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Events"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "EventsController_updateEvent",
+        "summary": "Update an Event",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalApiUpdateEventDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiSuccessResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Events"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      }
+    },
+    "/events/{syncId}": {
+      "delete": {
+        "operationId": "EventsController_deleteEvent",
+        "summary": "Delete an Event",
+        "parameters": [
+          {
+            "name": "syncId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiSuccessResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Events"
         ],
         "security": [
           {
@@ -420,16 +588,16 @@
             "nullable": true,
             "maxLength": 255
           },
+          "openingHours": {
+            "type": "string",
+            "maxLength": 255
+          },
           "isBillingAddress": {
             "type": "boolean"
           },
           "type": {
             "type": "string",
             "nullable": true,
-            "maxLength": 255
-          },
-          "openingHours": {
-            "type": "string",
             "maxLength": 255
           }
         },
@@ -442,9 +610,9 @@
           "street",
           "title",
           "description",
+          "openingHours",
           "isBillingAddress",
-          "type",
-          "openingHours"
+          "type"
         ]
       },
       "ExternalApiSuccessResponseDto": {
@@ -571,6 +739,91 @@
           "to": {
             "format": "date-time",
             "type": "string"
+          }
+        },
+        "required": [
+          "syncId"
+        ]
+      },
+      "ExternalApiEventDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string",
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "readOnly": true
+          },
+          "plannedDateFrom": {
+            "format": "date-time",
+            "type": "string",
+            "readOnly": true
+          },
+          "plannedDateTo": {
+            "format": "date-time",
+            "type": "string",
+            "readOnly": true
+          },
+          "title": {
+            "type": "string",
+            "readOnly": true
+          },
+          "description": {
+            "type": "string",
+            "readOnly": true
+          },
+          "tenantAddressSyncId": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "mandatory": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "syncId",
+          "type",
+          "plannedDateFrom",
+          "plannedDateTo",
+          "title",
+          "description",
+          "tenantAddressSyncId",
+          "mandatory"
+        ]
+      },
+      "ExternalApiUpdateEventDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "plannedDateFrom": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "plannedDateTo": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "tenantAddressSyncId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mandatory": {
+            "type": "boolean"
           }
         },
         "required": [
