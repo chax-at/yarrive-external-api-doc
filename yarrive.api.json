@@ -707,7 +707,7 @@
       "delete": {
         "operationId": "ExternalApiEventsController_deleteEvent",
         "summary": "Delete event",
-        "description": "Deletes a event unless it already started",
+        "description": "Deletes an event unless it already started",
         "parameters": [
           {
             "name": "syncId",
@@ -752,6 +752,212 @@
         },
         "tags": [
           "Events"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      }
+    },
+    "/api/external/access-codes": {
+      "get": {
+        "operationId": "ExternalApiAccessCodeController_getAccessCodes",
+        "summary": "Get all active accessCodes of tenant, including users and their addresses.\n    Every accessCode includes a user. If one user has multiple accessCodes it will occur multiple times.",
+        "description": "Note: this is a GET endpoint but it has a sideffect:\n    the syncId is generated and set for each retrieved accessCode and user\n    which does not have a syncId before the data is returned in the response",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiAccessCodesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "AccessCodes"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "ExternalApiAccessCodeController_createAccessCode",
+        "summary": "Create accessCode and possibly user with address",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalApiAccessCodeUserAndAddressCreateIncomingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiAccessCodeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "AccessCodes"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "ExternalApiAccessCodeController_updateAccessCode",
+        "summary": "Update accessCode and/or user and/or address of user",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalApiAccessCodeUserAndAddressUpdateIncomingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiAccessCodeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "AccessCodes"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      }
+    },
+    "/api/external/users/avatars": {
+      "get": {
+        "operationId": "ExternalApiAvatarController_getAvatars",
+        "summary": "Get all active accessCodes of tenant, including users and their addresses.\n    Every accessCode includes a user. If one user has multiple accessCodes it will occur multiple times.",
+        "description": "Note: this is a GET endpoint but it has a sideffect:\n    the syncId is generated and set for each retrieved accessCode and user\n    which does not have a syncId before the data is returned in the response",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiAvatarsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Avatars"
         ],
         "security": [
           {
@@ -1181,6 +1387,27 @@
           "syncId"
         ]
       },
+      "ExternalApiEventAttendeeDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "attended": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "syncId",
+          "attended",
+          "note"
+        ]
+      },
       "ExternalApiEventDto": {
         "type": "object",
         "properties": {
@@ -1218,6 +1445,13 @@
           "mandatory": {
             "type": "boolean",
             "readOnly": true
+          },
+          "attendees": {
+            "readOnly": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalApiEventAttendeeDto"
+            }
           }
         },
         "required": [
@@ -1228,7 +1462,8 @@
           "title",
           "description",
           "tenantAddressSyncId",
-          "mandatory"
+          "mandatory",
+          "attendees"
         ]
       },
       "ExternalApiEventsResponse": {
@@ -1279,6 +1514,12 @@
           },
           "mandatory": {
             "type": "boolean"
+          },
+          "attendees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalApiEventAttendeeDto"
+            }
           }
         },
         "required": [
@@ -1289,7 +1530,8 @@
           "title",
           "description",
           "tenantAddressSyncId",
-          "mandatory"
+          "mandatory",
+          "attendees"
         ]
       },
       "ExternalApiEventResponse": {
@@ -1337,10 +1579,374 @@
           },
           "mandatory": {
             "type": "boolean"
+          },
+          "attendees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalApiEventAttendeeDto"
+            }
+          }
+        },
+        "required": [
+          "syncId",
+          "attendees"
+        ]
+      },
+      "ExternalApiUserDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string",
+            "readOnly": true
+          },
+          "email": {
+            "type": "string",
+            "readOnly": true
+          },
+          "firstName": {
+            "type": "string",
+            "readOnly": true
+          },
+          "lastName": {
+            "type": "string",
+            "readOnly": true
+          },
+          "birthDate": {
+            "format": "date-time",
+            "type": "string",
+            "readOnly": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "syncId",
+          "email",
+          "firstName",
+          "lastName",
+          "birthDate",
+          "phoneNumber"
+        ]
+      },
+      "ExternalApiAddressDto": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string",
+            "readOnly": true
+          },
+          "state": {
+            "type": "string",
+            "readOnly": true
+          },
+          "postalCode": {
+            "type": "string",
+            "readOnly": true
+          },
+          "city": {
+            "type": "string",
+            "readOnly": true
+          },
+          "street": {
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "country",
+          "state",
+          "postalCode",
+          "city",
+          "street"
+        ]
+      },
+      "ExternalApiAccessCodeUserAndAddressReadDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string",
+            "readOnly": true
+          },
+          "courseGroupSyncId": {
+            "type": "string",
+            "readOnly": true
+          },
+          "active": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "activeUntil": {
+            "format": "date-time",
+            "type": "string",
+            "readOnly": true
+          },
+          "learningProgress": {
+            "type": "number",
+            "readOnly": true
+          },
+          "trainingProgress": {
+            "type": "number",
+            "readOnly": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/ExternalApiUserDto"
+          },
+          "address": {
+            "$ref": "#/components/schemas/ExternalApiAddressDto"
+          }
+        },
+        "required": [
+          "syncId",
+          "courseGroupSyncId",
+          "active",
+          "learningProgress",
+          "trainingProgress",
+          "user"
+        ]
+      },
+      "ExternalApiAccessCodesResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalApiAccessCodeUserAndAddressReadDto"
+            }
+          }
+        },
+        "required": [
+          "success",
+          "data"
+        ]
+      },
+      "ExternalApiCreateUserDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255
+          },
+          "birthDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255
           }
         },
         "required": [
           "syncId"
+        ]
+      },
+      "ExternalApiCreateAddressDto": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "state": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "postalCode": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "street": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": [
+          "country",
+          "state",
+          "postalCode",
+          "city",
+          "street"
+        ]
+      },
+      "ExternalApiAccessCodeUserAndAddressCreateIncomingDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "courseGroupSyncId": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "activeUntil": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/ExternalApiCreateUserDto"
+          },
+          "address": {
+            "$ref": "#/components/schemas/ExternalApiCreateAddressDto"
+          }
+        },
+        "required": [
+          "syncId",
+          "courseGroupSyncId",
+          "active",
+          "user"
+        ]
+      },
+      "ExternalApiAccessCodeResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/ExternalApiAccessCodeUserAndAddressReadDto"
+          }
+        },
+        "required": [
+          "success",
+          "data"
+        ]
+      },
+      "ExternalApiUpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "firstName": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "lastName": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "birthDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": [
+          "syncId"
+        ]
+      },
+      "ExternalApiUpdateAddressDto": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "state": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "postalCode": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "street": {
+            "type": "string",
+            "maxLength": 255
+          }
+        }
+      },
+      "ExternalApiAccessCodeUserAndAddressUpdateIncomingDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "activeUntil": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/ExternalApiUpdateUserDto"
+          },
+          "address": {
+            "$ref": "#/components/schemas/ExternalApiUpdateAddressDto"
+          }
+        }
+      },
+      "ExternalApiAvatarDto": {
+        "type": "object",
+        "properties": {
+          "userSyncId": {
+            "type": "string"
+          },
+          "svg": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "userSyncId",
+          "svg"
+        ]
+      },
+      "ExternalApiAvatarsResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalApiAvatarDto"
+            }
+          }
+        },
+        "required": [
+          "success",
+          "data"
         ]
       }
     }

@@ -504,6 +504,231 @@
           }
         ]
       }
+    },
+    "/accessCodes": {
+      "post": {
+        "operationId": "AccessCodeController_createAccessCode",
+        "summary": "Create a new accessCode and optional a new user with address",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalApiAccessCodeUserAndAddressCreateOutgoingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiSuccessResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Access Codes"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "AccessCodeController_updateAccessCode",
+        "summary": "Update an accessCode and/or an user and/or the users address",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalApiAccessCodeUserAndAddressUpdateOutgoingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiSuccessResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Access Codes"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      }
+    },
+    "/users/avatars": {
+      "put": {
+        "operationId": "AvatarController_updateAvatar",
+        "summary": "Set a user's Avatar",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalApiAvatarDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiSuccessResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Avatars"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      }
+    },
+    "/users/avatars/{syncId}": {
+      "delete": {
+        "operationId": "AvatarController_deleteAvatar",
+        "summary": "Delete a user's Avatar",
+        "parameters": [
+          {
+            "name": "syncId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiSuccessResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authentication Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalApiErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Avatars"
+        ],
+        "security": [
+          {
+            "X-Api-Key": []
+          }
+        ]
+      }
     }
   },
   "info": {
@@ -745,6 +970,27 @@
           "syncId"
         ]
       },
+      "ExternalApiEventAttendeeDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "attended": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "syncId",
+          "attended",
+          "note"
+        ]
+      },
       "ExternalApiEventDto": {
         "type": "object",
         "properties": {
@@ -782,6 +1028,13 @@
           "mandatory": {
             "type": "boolean",
             "readOnly": true
+          },
+          "attendees": {
+            "readOnly": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalApiEventAttendeeDto"
+            }
           }
         },
         "required": [
@@ -792,7 +1045,8 @@
           "title",
           "description",
           "tenantAddressSyncId",
-          "mandatory"
+          "mandatory",
+          "attendees"
         ]
       },
       "ExternalApiUpdateEventDto": {
@@ -824,10 +1078,221 @@
           },
           "mandatory": {
             "type": "boolean"
+          },
+          "attendees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalApiEventAttendeeDto"
+            }
+          }
+        },
+        "required": [
+          "syncId",
+          "attendees"
+        ]
+      },
+      "ExternalApiCreateUserDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255
+          },
+          "birthDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255
           }
         },
         "required": [
           "syncId"
+        ]
+      },
+      "ExternalApiAddressDto": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string",
+            "readOnly": true
+          },
+          "state": {
+            "type": "string",
+            "readOnly": true
+          },
+          "postalCode": {
+            "type": "string",
+            "readOnly": true
+          },
+          "city": {
+            "type": "string",
+            "readOnly": true
+          },
+          "street": {
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "country",
+          "state",
+          "postalCode",
+          "city",
+          "street"
+        ]
+      },
+      "ExternalApiAccessCodeUserAndAddressCreateOutgoingDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "courseGroupSyncId": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "activeUntil": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "learningProgress": {
+            "type": "number"
+          },
+          "trainingProgress": {
+            "type": "number"
+          },
+          "user": {
+            "$ref": "#/components/schemas/ExternalApiCreateUserDto"
+          },
+          "address": {
+            "$ref": "#/components/schemas/ExternalApiAddressDto"
+          }
+        },
+        "required": [
+          "syncId",
+          "courseGroupSyncId",
+          "active",
+          "learningProgress",
+          "trainingProgress",
+          "user",
+          "address"
+        ]
+      },
+      "ExternalApiUpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "firstName": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "lastName": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "birthDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "maxLength": 255
+          }
+        },
+        "required": [
+          "syncId"
+        ]
+      },
+      "ExternalApiUpdateAddressDto": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "state": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "postalCode": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "street": {
+            "type": "string",
+            "maxLength": 255
+          }
+        }
+      },
+      "ExternalApiAccessCodeUserAndAddressUpdateOutgoingDto": {
+        "type": "object",
+        "properties": {
+          "syncId": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "activeUntil": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "learningProgress": {
+            "type": "number"
+          },
+          "trainingProgress": {
+            "type": "number"
+          },
+          "user": {
+            "$ref": "#/components/schemas/ExternalApiUpdateUserDto"
+          },
+          "address": {
+            "$ref": "#/components/schemas/ExternalApiUpdateAddressDto"
+          }
+        }
+      },
+      "ExternalApiAvatarDto": {
+        "type": "object",
+        "properties": {
+          "userSyncId": {
+            "type": "string"
+          },
+          "svg": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "userSyncId",
+          "svg"
         ]
       }
     }
