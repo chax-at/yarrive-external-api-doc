@@ -865,6 +865,7 @@
       "patch": {
         "operationId": "ExternalApiAccessCodeController_updateAccessCode",
         "summary": "Update accessCode and/or user and/or address of user",
+        "description": "It is possible to update a user without accessCode-syncId.\n    In this case the response will include any of the valid accessCodes the user has at the given tenant.\n    In case an accessCode-syncId is provided this exact accessCode is included in the response,",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1603,15 +1604,15 @@
             "type": "string",
             "readOnly": true
           },
-          "firstName": {
+          "firstname": {
             "type": "string",
             "readOnly": true
           },
-          "lastName": {
+          "lastname": {
             "type": "string",
             "readOnly": true
           },
-          "birthDate": {
+          "birthdate": {
             "format": "date-time",
             "type": "string",
             "readOnly": true
@@ -1624,9 +1625,9 @@
         "required": [
           "syncId",
           "email",
-          "firstName",
-          "lastName",
-          "birthDate",
+          "firstname",
+          "lastname",
+          "birthdate",
           "phoneNumber"
         ]
       },
@@ -1735,17 +1736,17 @@
             "type": "string",
             "maxLength": 255
           },
-          "firstName": {
+          "firstname": {
             "type": "string",
             "nullable": true,
             "maxLength": 255
           },
-          "lastName": {
+          "lastname": {
             "type": "string",
             "nullable": true,
             "maxLength": 255
           },
-          "birthDate": {
+          "birthdate": {
             "format": "date-time",
             "type": "string"
           },
@@ -1798,8 +1799,7 @@
             "type": "string"
           },
           "courseGroupSyncId": {
-            "type": "string",
-            "maxLength": 255
+            "type": "string"
           },
           "active": {
             "type": "boolean"
@@ -1848,15 +1848,15 @@
             "type": "string",
             "maxLength": 255
           },
-          "firstName": {
+          "firstname": {
             "type": "string",
             "maxLength": 255
           },
-          "lastName": {
+          "lastname": {
             "type": "string",
             "maxLength": 255
           },
-          "birthDate": {
+          "birthdate": {
             "format": "date-time",
             "type": "string"
           },

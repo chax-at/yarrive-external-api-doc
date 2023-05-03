@@ -33,13 +33,13 @@ Docs can then be reached at [http://localhost:8080](http://localhost:8080).
 1. To **initiate Synchronization**, use the API-Key in the external system to call the `POST /sync` endpoint with the body `{ apiKey: '<your api key>' }`.\
 
 ### Initiate Synchronization per Entity
-Individual Entities existing on Yarrive are by default **unsynched**. The following events will make them **synched**.
+Individual Entities existing on Yarrive are by default **unsynced**. The following events will make them **synced**.
 * Every **new** Entity related to the Institution created on Yarrive will be sent to the external System via a `POST` request.
-* For **existing** (but yet unsynched) Entities, the external system has to perform a **read** operation (`GET`) first to prime them for synchronization.
+* For **existing** (but yet unsynced) Entities, the external system has to perform a **read** operation (`GET`) first to prime them for synchronization.
 * Entities **existing on the external system** have to be sent to Yarrive with the corresponding `POST` request.
 
 
-Each synched Entity will feature a `syncId` which should be mirrored on the external system.
+Each synced Entity will feature a `syncId` which should be mirrored on the external system.
 As soon as a `syncId` is present, a (supported) Entity will submit updates and deletions to the external system and also expects updates back.
 
 ## Example

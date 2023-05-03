@@ -618,7 +618,7 @@
       }
     },
     "/users/avatars": {
-      "put": {
+      "patch": {
         "operationId": "AvatarController_updateAvatar",
         "summary": "Set a user's Avatar",
         "parameters": [],
@@ -1101,17 +1101,17 @@
             "type": "string",
             "maxLength": 255
           },
-          "firstName": {
+          "firstname": {
             "type": "string",
             "nullable": true,
             "maxLength": 255
           },
-          "lastName": {
+          "lastname": {
             "type": "string",
             "nullable": true,
             "maxLength": 255
           },
-          "birthDate": {
+          "birthdate": {
             "format": "date-time",
             "type": "string"
           },
@@ -1164,8 +1164,7 @@
             "type": "string"
           },
           "courseGroupSyncId": {
-            "type": "string",
-            "maxLength": 255
+            "type": "string"
           },
           "active": {
             "type": "boolean"
@@ -1207,15 +1206,15 @@
             "type": "string",
             "maxLength": 255
           },
-          "firstName": {
+          "firstname": {
             "type": "string",
             "maxLength": 255
           },
-          "lastName": {
+          "lastname": {
             "type": "string",
             "maxLength": 255
           },
-          "birthDate": {
+          "birthdate": {
             "format": "date-time",
             "type": "string"
           },
