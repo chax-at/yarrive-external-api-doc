@@ -1221,6 +1221,9 @@
           "phoneNumber": {
             "type": "string",
             "maxLength": 255
+          },
+          "unlink": {
+            "type": "boolean"
           }
         },
         "required": [

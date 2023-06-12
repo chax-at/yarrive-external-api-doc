@@ -810,6 +810,7 @@
       "post": {
         "operationId": "ExternalApiAccessCodeController_createAccessCode",
         "summary": "Create accessCode and possibly user with address",
+        "description": "If you create an AccessCode you can\n    (1) Create a new user with provided DTO including a syncId and attributes.\n    (2) Link the new AccessCode to an already synced user. For this provide\n    a user DTO including a syncId, but no other attributes.\n    A potential user update needs to be handled in a different request.\n    (3) Link the new AccessCode to an user, which has not been synced already.\n    The user will be identified via e-mail address. For this provide\n    a user dto with a syncId and an e-mail address. All other user attributes will be ignored.",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -865,7 +866,7 @@
       "patch": {
         "operationId": "ExternalApiAccessCodeController_updateAccessCode",
         "summary": "Update accessCode and/or user and/or address of user",
-        "description": "It is possible to update a user without accessCode-syncId.\n    In this case the response will include any of the valid accessCodes the user has at the given tenant.\n    In case an accessCode-syncId is provided this exact accessCode is included in the response,",
+        "description": "It is possible to update a user without accessCode-syncId.\n    In this case the response will include any of the valid accessCodes the user has at the given tenant.\n    In case an accessCode-syncId is provided this exact accessCode is included in the response.\n    The user can also be unlinked by setting unlink to true. This is used if one side deletes/anonymizes the user.",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -883,7 +884,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ExternalApiAccessCodeResponse"
+                  "type": "object"
                 }
               }
             }
@@ -1863,6 +1864,9 @@
           "phoneNumber": {
             "type": "string",
             "maxLength": 255
+          },
+          "unlink": {
+            "type": "boolean"
           }
         },
         "required": [
